@@ -458,6 +458,10 @@ struct SettingsView: View {
     }
     #endif
 
+    //// 630:P1 Test iOS Setting appearance feature - Fix
+    //// this will provide a clear way to save the settings in iOS version
+    //// previously the iOS save settings by clicking replay button,
+    //// which is not intuitive for the user
     private var iOSSettings: some View {
         NavigationStack {
             Form {
@@ -469,14 +473,35 @@ struct SettingsView: View {
                     } label: {
                         Label("Rules & Automation", systemImage: "wand.and.rays")
                     }
+
                     NavigationLink {
                         PrivacyDashboardView()
                     } label: {
                         Label("Privacy & Security", systemImage: "lock.shield")
                     }
                 }
+
+                Section {
+                    Button {
+                        appearance = pendingAppearance
+                        context.saveOrLog()
+                        statusMessage = "Settings saved"
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text("Save")
+                                .fontWeight(.semibold)
+                            Spacer()
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(AppTheme.accent(for: scheme))
+                }
             }
             .navigationTitle("Settings")
+            .onAppear {
+                pendingAppearance = appearance
+            }
         }
     }
 
