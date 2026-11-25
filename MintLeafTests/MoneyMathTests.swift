@@ -179,5 +179,15 @@ final class MoneyMathTests: XCTestCase {
          )
 
          XCTAssertEqual(employer.amount, Decimal(string: "2500.00"))
+         
+         // Verify account balance after import
+         account.recalculateBalance()
+         try ctx.save()
+
+         XCTAssertEqual(
+             account.currentBalance,
+             Decimal(string: "2374.50"),
+             "Account balance should be $2,374.50 after importing the transactions"
+         )
      }
 }
