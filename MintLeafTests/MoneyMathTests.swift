@@ -1,5 +1,6 @@
 import XCTest
 import SwiftData
+//import SwiftUI I thought this was required to test color scheme but it is not required ??
 @testable import MintLeaf
 
 /// Locks down the money-critical paths: balance recalculation, transfer pairing,
@@ -190,4 +191,26 @@ final class MoneyMathTests: XCTestCase {
              "Account balance should be $2,374.50 after importing the transactions"
          )
      }
+    
+    // MARK: - Appearance Tests
+
+    func testColorSchemeChangesFromDarkToLight() {
+        // Start with dark appearance
+        var appearance = AppAppearance.dark
+
+        XCTAssertEqual(
+            appearance.colorScheme,
+            .dark,
+            "Dark appearance should use the dark color scheme"
+        )
+
+        // Change appearance to light
+        appearance = .light
+
+        XCTAssertEqual(
+            appearance.colorScheme,
+            .light,
+            "Light appearance should use the light color scheme"
+        )
+    }
 }
